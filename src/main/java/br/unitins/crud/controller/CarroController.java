@@ -17,7 +17,7 @@ public class CarroController implements Serializable {
 	private static final long serialVersionUID = 6622012672983485067L;
 	private Carro carro;
 	private List<Carro> listaCarros;
-	private int cont =1;
+	private int cont = 1;
 
 	public Carro getCarro() {
 		if (carro == null) {
@@ -43,27 +43,44 @@ public class CarroController implements Serializable {
 
 	public void cadastrar() {
 
-		getCarro().setId(cont++);
-		getListaCarros().add(carro);
-		limpar();
 		
-		Util.addMsg("Cadastro realizado com sucesso!");
+		if(carro.getNome().equals("")) {
+			
+			Util.addMsg("O nome do veículo deve ser informado.");	
+		
+		}
+		if(carro.getMarca().equals("")) {
+			
+			Util.addMsg("A marca do veículo deve ser informado.");	
+		
+		}
+		
+		else {
+			
+			getCarro().setId(cont++);
+			getListaCarros().add(carro);
+			limpar();
+			
+			Util.addMsg("Cadastro realizado com sucesso!");
+		}
 	}
-	
+
 	public void alterar() {
-		
+
 		int index = listaCarros.indexOf(getCarro());
 		listaCarros.set(index, getCarro());
-		
+
 	}
 
 	public void remover(Carro carro) {
 		listaCarros.remove(carro);
 	}
+
 	public void editar(Carro carro) {
-	
+
 		setCarro(carro.getClone());
 	}
+
 	public void limpar() {
 
 		carro = null;
