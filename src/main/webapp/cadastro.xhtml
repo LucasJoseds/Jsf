@@ -44,6 +44,17 @@
 						<h:outputLabel styleClass="form-label" value="Potência " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.potencia}" />
+						<h:outputLabel styleClass="form-label" value="Cambio " />
+						
+							
+							
+						<h:selectOneRadio styleClass="form-label" value="#{carroController.carro.cambio}">
+						<f:selectItems var="obj" 
+						value="#{carroController.listaCambio}"
+						itemLabel="#{obj.label}"
+						itemValue="#{obj}" />
+							
+						</h:selectOneRadio>
 					</div>
 
 					<div style="width: 32%; margin-left: 15px" class="bb">
@@ -91,6 +102,10 @@
 				<h:column>
 					<f:facet name="header">Cor</f:facet>
 					<h:outputLabel value="#{obj.cor}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Cambio</f:facet>
+					<h:outputLabel value="#{obj.cambio.label}" />
 				</h:column>
 
 				<h:column>

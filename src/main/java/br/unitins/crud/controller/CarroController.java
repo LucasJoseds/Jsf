@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.unitins.crud.application.Util;
+import br.unitins.crud.model.Cambio;
 import br.unitins.crud.model.Carro;
 
 @Named
@@ -41,28 +42,47 @@ public class CarroController implements Serializable {
 		this.listaCarros = listaCarros;
 	}
 
-	public void cadastrar() {
-
+	
+	public Cambio[] getListaCambio(){
+		return Cambio.values();
+	}
+	
+	public boolean validar() {
 		
-		if(carro.getNome().equals("")) {
+		
+		if(carro.getNome().trim().equals("")) {
 			
 			Util.addMsg("O nome do veículo deve ser informado.");	
-		
+			return false;
 		}
-		if(carro.getMarca().equals("")) {
+		if(carro.getMarca().trim().equals("")) {
 			
 			Util.addMsg("A marca do veículo deve ser informado.");	
-		
+			return false;
 		}
 		
-		else {
+		if(getCarro().getNome().trim().length()<3) {
 			
+			Util.addMsg("O nome do veículo deve ter pelo menos 3 caracteres.");	
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void cadastrar() {
+		
+		if(!validar()) {
+			return ;
+		}
+		
+	
 			getCarro().setId(cont++);
 			getListaCarros().add(carro);
 			limpar();
 			
 			Util.addMsg("Cadastro realizado com sucesso!");
-		}
+		
 	}
 
 	public void alterar() {

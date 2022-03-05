@@ -9,9 +9,18 @@ public class Carro implements Cloneable{
 	private String marca;
 	private String cor;
 	private String placa;
+	private Cambio cambio;
 	private String potencia;
 	
 	
+		
+	public Cambio getCambio() {
+		return cambio;
+	}
+	
+	public void setCambio(Cambio cambio) {
+		this.cambio = cambio;
+	}
 	public Carro getClone() {
 		
 		try {
