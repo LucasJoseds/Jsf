@@ -20,77 +20,133 @@
 
 	<div style="margin-top: 60px" class="main">
 
+		<h:messages style="color:grewn;" />
 		<h:form>
 
 			<h1 style="font-family: emoji" align="center">Cadastro de
 				veiculos</h1>
-			<div style="width: 50%; margin: auto" class="card">
+				
+				
+				<div style="width: 50%; margin: auto; position:initial" class="card">
 
-				<div class="card-header">
 					<div class="card-body">
 						<h:outputLabel styleClass="form-label" value="Nome " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.nome}" />
+
+
 						<h:outputLabel styleClass="form-label" value="Marca " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.marca}" />
+
+
 						<h:outputLabel styleClass="form-label" value="Cor " />
 						<h:inputText styleClass="form-control"
-							value="#{carroController.carro.cor}" />
+							value="#{carroController.carro.cor}" required="true"
+							requiredMessage="A cor do veículo deve ser informada" />
+
+
 						<h:outputLabel styleClass="form-label" value="Placa " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.placa}" />
 						<h:outputLabel styleClass="form-label" value="Potência " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.potencia}" />
+						<h:outputLabel styleClass="form-label" value="Cambio " />
+
+
+
+						<h:selectOneRadio styleClass="form-label"
+							value="#{carroController.carro.cambio}">
+							<f:selectItems var="obj" value="#{carroController.listaCambio}"
+								itemLabel="#{obj.label}" itemValue="#{obj}" />
+
+						</h:selectOneRadio>
 					</div>
 
 					<div style="width: 32%; margin-left: 15px" class="bb">
 						<h:commandButton style="margin-right:3px"
 							styleClass="btn btn-success" value="Cadastrar"
-							action="#{carroController.cadastrar}" />
-						<h:commandButton styleClass="btn btn-danger" value="Limpar"
-							actionListener="#{carroController.limpar}" />
+							action="#{carroController.cadastrar}"
+							disabled="#{carroController.carro.id != null}"
+							messages="Inclusão realizada com sucesso" />
+
+
+						<h:commandButton style="margin-right:3px"
+							styleClass="btn btn-secondary" value="Alterar"
+							actionListener="#{carroController.alterar}"
+							disabled="#{carroController.carro.id == null}" />
 					</div>
-				</div>
+
 			</div>
 		</h:form>
+
+		<div>
+
+			<h:form styleClass="botao-limpar">
+
+				<h:commandButton styleClass="btn btn-danger" value="Limpar"
+					actionListener="#{carroController.limpar}" />
+			</h:form>
+
+		</div>
+		
 	</div>
 
-	<div style="width:50%; margin:auto; margin-top:30px">
+
+	<div style="width: 50%; margin: auto; margin-top: 30px">
+
+		<h:form>
+			<h:dataTable styleClass="table table-striped"
+				value="#{carroController.listaCarros}" var="obj">
+
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					<h:outputLabel value="#{obj.id}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputLabel value="#{obj.nome}" />
+				</h:column>
 
 
-		<h:dataTable styleClass="table table-striped" value="#{carroController.listaCarros}"
-			var="obj">
-			
-			<h:column>
-				<f:facet name="header">Nome</f:facet>
-				<h:outputLabel value="#{obj.nome}" />
-			</h:column>
-
-		
-			<h:column>
-				<f:facet name="header">Marca</f:facet>
-				<h:outputLabel value="#{obj.marca}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Marca</f:facet>
+					<h:outputLabel value="#{obj.marca}" />
+				</h:column>
 
 
-			<h:column>
-				<f:facet name="header">Cor</f:facet>
-				<h:outputLabel value="#{obj.cor}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Cor</f:facet>
+					<h:outputLabel value="#{obj.cor}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Cambio</f:facet>
+					<h:outputLabel value="#{obj.cambio.label}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Placa</f:facet>
-				<h:outputLabel value="#{obj.placa}" />
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Potência</f:facet>
-				<h:outputLabel value="#{obj.potencia}" />
-			</h:column>
-			
-		</h:dataTable>
+				<h:column>
+					<f:facet name="header">Placa</f:facet>
+					<h:outputLabel value="#{obj.placa}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Potência</f:facet>
+					<h:outputLabel value="#{obj.potencia}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+					<h:commandButton value="Editar"
+						actionListener="#{carroController.editar(obj)}" />
+
+					<h:commandButton value="Exclur"
+						actionListener="#{carroController.remover(obj)}" />
+
+				</h:column>
+
+			</h:dataTable>
+		</h:form>
 	</div>
 </h:body>
 </html>

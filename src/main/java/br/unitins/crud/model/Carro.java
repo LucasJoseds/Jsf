@@ -1,15 +1,46 @@
 package br.unitins.crud.model;
 
-public class Carro {
+import java.util.Objects;
 
+public class Carro implements Cloneable{
+
+	private Integer id;
 	private String nome;
 	private String marca;
 	private String cor;
 	private String placa;
+	private Cambio cambio;
 	private String potencia;
 	
 	
+		
+	public Cambio getCambio() {
+		return cambio;
+	}
 	
+	public void setCambio(Cambio cambio) {
+		this.cambio = cambio;
+	}
+	public Carro getClone() {
+		
+		try {
+			return (Carro)super.clone();
+			
+		} catch (CloneNotSupportedException e) {
+			
+			e.printStackTrace();
+		}
+		return null;
+}
+
+	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -40,6 +71,26 @@ public class Carro {
 	public void setPotencia(String potencia) {
 		this.potencia = potencia;
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Carro other = (Carro) obj;
+		return Objects.equals(id, other.id);
+	}
+	
+	
 	
 	
 	
