@@ -2,11 +2,14 @@ package br.unitins.crud.model;
 
 import java.time.LocalDate;
 
+import br.unitins.crud.controller.Sexo;
+
 public class Usuario implements Cloneable {
 
 	private Integer id;
 	private String nome;
 	private Integer idade;
+	private Sexo sexo;
 	private Endereco endereco;
 	private String cpf;
 	private String telefone;
@@ -59,7 +62,14 @@ public class Usuario implements Cloneable {
 		this.endereco = endereco;
 	}
 	
-	
+
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
 
 	public String getSenha() {
 		return senha;
