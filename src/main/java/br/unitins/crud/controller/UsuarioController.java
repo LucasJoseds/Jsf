@@ -88,10 +88,22 @@ public boolean validar() {
 	
 	public void alterar() {
 		
+		
+		if(!validar())
+			return;
+			
+			
 		int index = listaUsuarios.indexOf(getUsuario());
 		listaUsuarios.set(index, getUsuario());
+		
+		limpar();
+		
+		Util.addMsg("Alteração realizada com sucesso!");
 	}
 
+	
+	
+	
 	
 	public void remover(Usuario usuario) {
 		listaUsuarios.remove(usuario);
