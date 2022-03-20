@@ -2,17 +2,17 @@ package br.unitins.crud.model;
 
 public class Endereco {
 
-	private String endereço;
+	private String en;
 	private String bairro;
 	private String uf;
 	
 	
 	
-	public String getEndereço() {
-		return endereço;
+	public String getEn() {
+		return en;
 	}
-	public void setEndereço(String endereço) {
-		this.endereço = endereço;
+	public void setEn(String en) {
+		this.en = en;
 	}
 	public String getBairro() {
 		return bairro;

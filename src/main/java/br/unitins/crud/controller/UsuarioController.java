@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.unitins.crud.application.Util;
+import br.unitins.crud.model.Carro;
 import br.unitins.crud.model.Endereco;
 import br.unitins.crud.model.Usuario;
 
@@ -16,6 +18,7 @@ public class UsuarioController implements Serializable {
 
 	private static final long serialVersionUID = 7544251872019170822L;
 	private Usuario usuario;
+	private int cont=1;
 	private List<Usuario> listaUsuarios;
 	
 	
@@ -42,6 +45,66 @@ public class UsuarioController implements Serializable {
 	}
 	
 	
+	public Sexo[] getListaSexo() {
+		
+		return Sexo.values();
+		
+	}
+	
+	
+public boolean validar() {
+		
+		
+		if(usuario.getNome().trim().equals("")) {
+			
+			Util.addMsg("O nome deve ser informado.");	
+			return false;
+		}
+		
+		
+		if(getUsuario().getNome().trim().length()<3) {
+			
+			Util.addMsg("O nome deve ter pelo menos 3 caracteres.");	
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void cadastrar() {
+		
+		if(!validar()) {
+			return ;
+		}
+		
+	
+			getUsuario().setId(cont++);
+			getListaUsuarios().add(usuario);
+			limpar();
+			
+			Util.addMsg("Cadastro realizado com sucesso!");
+		
+	}
+	
+	public void alterar() {
+		
+		int index = listaUsuarios.indexOf(getUsuario());
+		listaUsuarios.set(index, getUsuario());
+	}
+
+	
+	public void remover(Usuario usuario) {
+		listaUsuarios.remove(usuario);
+	}
+
+	public void editar(Usuario u) {
+
+		setUsuario(u.getClone());
+	}
+		public void limpar() {
+			
+			usuario=null;
+	}
 	
 	
 	

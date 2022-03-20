@@ -8,7 +8,6 @@ public class Usuario implements Cloneable {
 
 	private Integer id;
 	private String nome;
-	private Integer idade;
 	private Sexo sexo;
 	private Endereco endereco;
 	private String cpf;
@@ -46,13 +45,6 @@ public class Usuario implements Cloneable {
 		this.nome = nome;
 	}
 
-	public Integer getIdade() {
-		return idade;
-	}
-
-	public void setIdade(Integer idade) {
-		this.idade = idade;
-	}
 
 	public Endereco getEndereco() {
 		return endereco;
