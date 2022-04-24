@@ -52,18 +52,18 @@ public class CarroController implements Serializable {
 		
 		if(carro.getNome().trim().equals("")) {
 			
-			Util.addMsg("O nome do veículo deve ser informado.");	
+			Util.addMessageError("O nome do veículo deve ser informado.");	
 			return false;
 		}
 		if(carro.getMarca().trim().equals("")) {
 			
-			Util.addMsg("A marca do veículo deve ser informado.");	
+			Util.addMessageError("A marca do veículo deve ser informado.");	
 			return false;
 		}
 		
 		if(getCarro().getNome().trim().length()<3) {
 			
-			Util.addMsg("O nome do veículo deve ter pelo menos 3 caracteres.");	
+			Util.addMessageError("O nome do veículo deve ter pelo menos 3 caracteres.");	
 			return false;
 		}
 		
@@ -81,7 +81,7 @@ public class CarroController implements Serializable {
 			getListaCarros().add(carro);
 			limpar();
 			
-			Util.addMsg("Cadastro realizado com sucesso!");
+			Util.addMessageInfo("Cadastro realizado com sucesso!");
 		
 	}
 

@@ -11,6 +11,7 @@ public class Usuario implements Cloneable {
 	private String nome;
 	private Sexo sexo;
 	private Endereco endereco;
+	private String email;
 	private String cpf;
 	private String telefone;
 	private String senha;
@@ -70,6 +71,15 @@ public class Usuario implements Cloneable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getCpf() {

@@ -36,82 +36,42 @@
 						<h:inputText styleClass="form-control"
 							value="#{usuarioController.usuario.nome}" />
 					</div>
-
-
 					<div class="form-group col-md-6">
-						<h:outputLabel styleClass="form-label" value="CPF " />
-						<h:inputText id="cpf" styleClass="form-control"
-							value="#{usuarioController.usuario.cpf}" required="true"
-							requiredMessage="É necessário informar o CPF"
-							validatorMessage="Cpf inválido">
-
-							<f:validateRegex
-								pattern="([0-9]{3}[.][0-9]{3}[.][0-9]{3}[-][0-9]{2})" />
-
-						</h:inputText>
-						<h:message for="cpf" style="color:red" />
-					</div>
-
-					<div class="form-group col-md-6">
-						<h:outputLabel styleClass="form-label" value="Data de Nascimento " />
-						<input class="form-control" jsf:id="data" jsf:immediate="true"
-							type="date"
-							jsf:value="#{usuarioController.usuario.dataNAscimento}">
-						<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
-						</input>
-
-					</div>
-
-					<div class="form-group col-md-6">
-						<h:outputLabel styleClass="form-label" value="Edereço " />
+						<h:outputLabel styleClass="form-label" value="Email " />
 						<h:inputText styleClass="form-control"
-							value="#{usuarioController.usuario.endereco.en}" />
+							value="#{usuarioController.usuario.email}" />
 					</div>
-
-					<div class="form-group col-md-6">
-						<h:outputLabel styleClass="form-label" value="Sexo " />
-
-
-						<h:selectOneMenu styleClass="form-control"
-							value="#{usuarioController.usuario.sexo}">
-
-							<f:selectItem itemLabel="Selecione ..." />
-							<f:selectItems var="obj" value="#{usuarioController.listaSexo}"
-								itemLabel="#{obj.label}" itemValue="#{obj}" />
-
-						</h:selectOneMenu>
-
-
-					</div>
-					<div class="form-group col-md-3">
-						<h:outputLabel styleClass="form-label" value="Bairro " />
-						<h:inputText styleClass="form-control"
-							value="#{usuarioController.usuario.endereco.bairro}" />
+					<div class="form-group col-md-12">
+						<h:outputLabel styleClass="form-label" value="Senha " />
+						<h:inputSecret styleClass="form-control"
+							value="#{usuarioController.usuario.senha}" />
 					</div>
 
 
-					<div class="form-group col-md-3">
-						<h:outputLabel styleClass="form-label" value="Complemento " />
-						<h:inputText styleClass="form-control"
-							value="#{usuarioController.usuario.endereco.uf}" />
-
-					</div>
-
-					<h:commandButton style="margin-right:3px;width:20%"
+	
+					<h:commandButton style="width:20%; margin-right:3px"
 						styleClass="btn btn-success" value="Cadastrar"
 						actionListener="#{usuarioController.cadastrar}"
 						disabled="#{usuarioController.usuario.id != null}">
-						<f:ajax execute="form" render="form messages" />
+						<f:ajax execute="form" render="messages form dataTable" />
 					</h:commandButton>
 
-					<h:commandButton style="margin-right:3px; width:20%"
+					<h:commandButton style="width:20%;margin-right:3px"
 						styleClass="btn btn-secondary" value="Alterar"
-						actionListener="#{usuarioController.alterar}"
-						disabled="#{usuarioController.usuario.id == null}" />
+						action="#{usuarioController.alterar}"
+						disabled="#{usuarioController.usuario.id == null}" >
+						<f:ajax execute="form" render="messages form dataTable" />
+					</h:commandButton>
+					
+					<h:commandButton style="width:20%;margin-right:3px"
+						styleClass="btn btn-danger" value="Excluir"
+						action="#{usuarioController.excluir}"
+						disabled="#{usuarioController.usuario.id == null}" >
+						<f:ajax execute="form" render="messages form dataTable" />
+					</h:commandButton>
 						
-						
-
-					<h:commandButton style="width:20%" styleClass="btn btn-danger"
+					
+					<h:commandButton style="width:20%;margin-right:3px" styleClass="btn btn-warning"
 						value="Limpar" actionListener="#{usuarioController.limpar}">
 						<f:ajax render="@all" />
 
@@ -120,7 +80,7 @@
 
 
 	
-			<h:dataTable id="datatable" styleClass="table table-striped"
+			<h:dataTable id="dataTable" styleClass="table table-striped"
 				value="#{usuarioController.listaUsuarios}" var="obj">
 
 				<h:column>
@@ -131,40 +91,14 @@
 					<f:facet name="header">Nome</f:facet>
 					<h:outputLabel value="#{obj.nome}" />
 				</h:column>
-
-
 				<h:column>
-					<f:facet name="header">CPF</f:facet>
-					<h:outputLabel value="#{obj.cpf}" />
-				</h:column>
-
-
-				<h:column>
-					<f:facet name="header">Nascimento</f:facet>
-					<h:outputLabel value="#{obj.dataNAscimento}">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-					</h:outputLabel>
-
+					<f:facet name="header">Email</f:facet>
+					<h:outputLabel value="#{obj.email}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header">Endereço</f:facet>
-					<h:outputLabel value="#{obj.endereco.en}" />
+					<f:facet name="header">Senha</f:facet>
+					<h:outputLabel value="#{obj.senha}" />
 				</h:column>
-
-				<h:column>
-					<f:facet name="header">Sexo</f:facet>
-					<h:outputLabel value="#{obj.sexo.label}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Bairro</f:facet>
-					<h:outputLabel value="#{obj.endereco.bairro}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Complemento</f:facet>
-					<h:outputLabel value="#{obj.endereco.uf}" />
-				</h:column>
-
 				<h:column>
 					<f:facet name="header">Ações</f:facet>
 					<h:commandButton value="Editar"
@@ -174,7 +108,7 @@
 
 					<h:commandButton value="Exclur"
 						actionListener="#{usuarioController.remover(obj)}" >
-						<f:ajax execute="@this" render="@form" />
+						<f:ajax execute="@this" render="dataTable" />
 						
 					</h:commandButton>
 				</h:column>
