@@ -1,5 +1,6 @@
 package br.unitins.crud.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Carro implements Cloneable{
@@ -11,7 +12,7 @@ public class Carro implements Cloneable{
 	private String placa;
 	private Cambio cambio;
 	private String potencia;
-	
+	private LocalDate datalancamento;
 	
 		
 	public Cambio getCambio() {
@@ -71,6 +72,15 @@ public class Carro implements Cloneable{
 	public void setPotencia(String potencia) {
 		this.potencia = potencia;
 	}
+	
+	public LocalDate getDatalancamento() {
+		return datalancamento;
+	}
+
+	public void setDatalancamento(LocalDate datalancamento) {
+		this.datalancamento = datalancamento;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

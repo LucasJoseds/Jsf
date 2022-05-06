@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
 <h:head>
 
 	<title>Carros</title>
@@ -18,135 +20,172 @@
 
 <h:body>
 
-	<div style="margin-top: 60px" class="main">
+	<div style="width: 80%; margin: auto; margin-top: 100px;" class="main">
 
-		<h:messages style="color:grewn;" />
-		<h:form>
 
-			<h1 style="font-family: emoji" align="center">Cadastro de
-				veiculos</h1>
-				
-				
-				<div style="width: 50%; margin: auto; position:initial" class="card">
+		<div class="card">
 
-					<div class="card-body">
+			<h3 class="card-header">Cadastrar Carro</h3>
+
+			<div class="card-body">
+
+				<h:messages style="color:grewn;" />
+				<h:form id="form" styleClass="row g-3">
+
+					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Nome " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.nome}" />
+					</div>
 
-
+					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Marca " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.marca}" />
+					</div>
 
-
+					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Cor " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.cor}" required="true"
 							requiredMessage="A cor do veículo deve ser informada" />
+					</div>
 
-
+					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Placa " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.placa}" />
+					</div>
+
+
+					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Potência " />
 						<h:inputText styleClass="form-control"
 							value="#{carroController.carro.potencia}" />
+					</div>
+					<div class="form-group col-md-6">
+
+						<h:outputLabel styleClass="form-label" value="Data lançamento " />
+
+						<div>
+
+							<input jsf:id="data" type="date" class="form-control"
+								jsf:value="#{carroController.carro.datalancamento}">
+							<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+
+							</input>
+
+						</div>
+					</div>
+
+
+
+					<div class="form-group col-md-12">
 						<h:outputLabel styleClass="form-label" value="Cambio " />
 
 
-
-						<h:selectOneRadio styleClass="form-label"
+						<h:selectOneMenu styleClass="form-control"
 							value="#{carroController.carro.cambio}">
+
+							<f:selectItem itemLabel="Selecione..." />
+
 							<f:selectItems var="obj" value="#{carroController.listaCambio}"
 								itemLabel="#{obj.label}" itemValue="#{obj}" />
 
-						</h:selectOneRadio>
+						</h:selectOneMenu>
+
 					</div>
 
-					<div style="width: 32%; margin-left: 15px" class="bb">
+					<div>
 						<h:commandButton style="margin-right:3px"
 							styleClass="btn btn-success" value="Cadastrar"
 							action="#{carroController.cadastrar}"
 							disabled="#{carroController.carro.id != null}"
-							messages="Inclusão realizada com sucesso" />
+							messages="Inclusão realizada com sucesso">
+							<f:ajax execute="form" render="messages form" />
+						</h:commandButton>
 
 
 						<h:commandButton style="margin-right:3px"
 							styleClass="btn btn-secondary" value="Alterar"
 							actionListener="#{carroController.alterar}"
-							disabled="#{carroController.carro.id == null}" />
+							disabled="#{carroController.carro.id == null}">
+							<f:ajax execute="form" render="messages form" />
+
+						</h:commandButton>
+
+						<h:commandButton styleClass="btn btn-danger" value="Limpar"
+							actionListener="#{carroController.limpar}">
+							<f:ajax render="form" />
+
+						</h:commandButton>
 					</div>
 
+
+					<h:dataTable id="dataTable" styleClass="table table-striped"
+						value="#{carroController.listaCarros}" var="obj">
+
+						<h:column>
+							<f:facet name="header">Id</f:facet>
+							<h:outputLabel value="#{obj.id}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							<h:outputLabel value="#{obj.nome}" />
+						</h:column>
+
+
+						<h:column>
+							<f:facet name="header">Marca</f:facet>
+							<h:outputLabel value="#{obj.marca}" />
+						</h:column>
+
+
+						<h:column>
+							<f:facet name="header">Cor</f:facet>
+							<h:outputLabel value="#{obj.cor}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Cambio</f:facet>
+							<h:outputLabel value="#{obj.cambio.label}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Placa</f:facet>
+							<h:outputLabel value="#{obj.placa}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Potência</f:facet>
+							<h:outputLabel value="#{obj.potencia}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Data de lançamento</f:facet>
+							<h:outputLabel value="#{obj.datalancamento}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputLabel>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<h:commandButton value="Editar"
+								actionListener="#{carroController.editar(obj.id)}" >
+								<f:ajax execute="@this" render="form" />
+								</h:commandButton>
+
+							<h:commandButton value="Exclur"
+								actionListener="#{carroController.remover(obj)}" >
+								<f:ajax execute="@this" render="form" />
+								</h:commandButton>
+
+						</h:column>
+
+					</h:dataTable>
+
+				</h:form>
+
 			</div>
-		</h:form>
-
-		<div>
-
-			<h:form styleClass="botao-limpar">
-
-				<h:commandButton styleClass="btn btn-danger" value="Limpar"
-					actionListener="#{carroController.limpar}" />
-			</h:form>
-
 		</div>
-		
-	</div>
-
-
-	<div style="width: 50%; margin: auto; margin-top: 30px">
-
-		<h:form>
-			<h:dataTable styleClass="table table-striped"
-				value="#{carroController.listaCarros}" var="obj">
-
-				<h:column>
-					<f:facet name="header">Id</f:facet>
-					<h:outputLabel value="#{obj.id}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Nome</f:facet>
-					<h:outputLabel value="#{obj.nome}" />
-				</h:column>
-
-
-				<h:column>
-					<f:facet name="header">Marca</f:facet>
-					<h:outputLabel value="#{obj.marca}" />
-				</h:column>
-
-
-				<h:column>
-					<f:facet name="header">Cor</f:facet>
-					<h:outputLabel value="#{obj.cor}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Cambio</f:facet>
-					<h:outputLabel value="#{obj.cambio.label}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Placa</f:facet>
-					<h:outputLabel value="#{obj.placa}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Potência</f:facet>
-					<h:outputLabel value="#{obj.potencia}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Ações</f:facet>
-					<h:commandButton value="Editar"
-						actionListener="#{carroController.editar(obj)}" />
-
-					<h:commandButton value="Exclur"
-						actionListener="#{carroController.remover(obj)}" />
-
-				</h:column>
-
-			</h:dataTable>
-		</h:form>
 	</div>
 </h:body>
 </html>

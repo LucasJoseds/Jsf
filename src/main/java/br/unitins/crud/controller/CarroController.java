@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.unitins.crud.application.Util;
+import br.unitins.crud.dao.CarroDAO;
 import br.unitins.crud.model.Cambio;
 import br.unitins.crud.model.Carro;
 
@@ -18,7 +19,6 @@ public class CarroController implements Serializable {
 	private static final long serialVersionUID = 6622012672983485067L;
 	private Carro carro;
 	private List<Carro> listaCarros;
-	private int cont = 1;
 
 	public Carro getCarro() {
 		if (carro == null) {
@@ -33,6 +33,10 @@ public class CarroController implements Serializable {
 
 	public List<Carro> getListaCarros() {
 		if (listaCarros == null) {
+			CarroDAO dao = new CarroDAO();
+			listaCarros = dao.getAll();
+			
+			if(listaCarros==null)
 			listaCarros = new ArrayList<Carro>();
 		}
 		return listaCarros;
@@ -42,63 +46,89 @@ public class CarroController implements Serializable {
 		this.listaCarros = listaCarros;
 	}
 
-	
-	public Cambio[] getListaCambio(){
+	public Cambio[] getListaCambio() {
 		return Cambio.values();
 	}
-	
+
 	public boolean validar() {
-		
-		
-		if(carro.getNome().trim().equals("")) {
-			
-			Util.addMsg("O nome do veículo deve ser informado.");	
+
+		if (carro.getNome().trim().equals("")) {
+
+			Util.addMessageError("O nome do veículo deve ser informado.");
 			return false;
 		}
-		if(carro.getMarca().trim().equals("")) {
-			
-			Util.addMsg("A marca do veículo deve ser informado.");	
+		if (carro.getMarca().trim().equals("")) {
+
+			Util.addMessageError("A marca do veículo deve ser informado.");
 			return false;
 		}
-		
-		if(getCarro().getNome().trim().length()<3) {
-			
-			Util.addMsg("O nome do veículo deve ter pelo menos 3 caracteres.");	
+
+		if (getCarro().getNome().trim().length() < 3) {
+
+			Util.addMessageError("O nome do veículo deve ter pelo menos 3 caracteres.");
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public void cadastrar() {
-		
-		if(!validar()) {
-			return ;
+
+		if (!validar()) {
+			return;
 		}
+
+		CarroDAO dao = new CarroDAO();
+		if(!dao.insert(getCarro())) {
+			Util.addMessageInfo("Erro ao realizar cadastro");
+			return;	
+		}
+		limpar();
 		
-	
-			getCarro().setId(cont++);
-			getListaCarros().add(carro);
-			limpar();
-			
-			Util.addMsg("Cadastro realizado com sucesso!");
-		
+		setListaCarros(null);
+		Util.addMessageInfo("Inclusão realizada com sucesso");
+
 	}
 
 	public void alterar() {
 
-		int index = listaCarros.indexOf(getCarro());
-		listaCarros.set(index, getCarro());
+		if(!validar()) {
+			return;
+		}
+		
+	CarroDAO dao= new CarroDAO();
+		if(!dao.update(getCarro())) {
+			Util.addMessageError("Erro ao atualizar os dados");
+			return;
+		}
+		limpar();
+		setListaCarros(null);
+		Util.addMessageInfo("Atualização realizada com sucesso");
+		
+		
 
 	}
 
-	public void remover(Carro carro) {
-		listaCarros.remove(carro);
+	public void remover() {
+		excluir(getCarro().getId());
+		limpar();
 	}
 
-	public void editar(Carro carro) {
-
-		setCarro(carro.getClone());
+	public void excluir(int id) {
+		
+		CarroDAO dao= new CarroDAO();
+		if(!dao.delete(id)) {
+			Util.addMessageError("Erro ao deletar");
+			return;
+		}
+		setListaCarros(null);
+		Util.addMessageInfo("Deletado com sucesso");
+	}
+	
+	public void editar(int id) {
+		
+		CarroDAO dao= new CarroDAO();
+		setCarro(dao.getById(id));
 	}
 
 	public void limpar() {

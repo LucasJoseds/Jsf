@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface DAO <T>{
 
+
 	public static Connection getConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -18,7 +19,8 @@ public interface DAO <T>{
 
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/livrosdb", "postgres", "123456");
+
+			conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/topicos", "postgres", "lucas");
 		} catch (SQLException e) {
 			System.out.println("Problema ao conectar no banco de dados. Verifique as informacoes de conexao.");
 			e.printStackTrace();
@@ -32,5 +34,5 @@ public interface DAO <T>{
 	public boolean update(T obj);
 	public boolean delete(int id);
 	public List<T> getAll();
-	
+
 }

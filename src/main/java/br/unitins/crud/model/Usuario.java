@@ -11,9 +11,11 @@ public class Usuario implements Cloneable {
 	private String nome;
 	private Sexo sexo;
 	private Endereco endereco;
+	private String email;
 	private String cpf;
 	private String telefone;
 	private String senha;
+	private Perfil perfil;
 	private LocalDate dataNAscimento;
 	
 	
@@ -72,6 +74,15 @@ public class Usuario implements Cloneable {
 		this.senha = senha;
 	}
 
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -86,6 +97,14 @@ public class Usuario implements Cloneable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 	public LocalDate getDataNAscimento() {

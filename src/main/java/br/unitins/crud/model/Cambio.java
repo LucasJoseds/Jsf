@@ -9,6 +9,11 @@ public enum Cambio {
 	private String label;
 	
 	
+	Cambio(int id , String label){
+		
+		this.id=id;
+		this.label=label;
+	}
 	
 	public int getId() {
 		return id;
@@ -33,10 +38,16 @@ public enum Cambio {
 	}
 
 
-
-	Cambio(int id , String label){
-		
-		this.id=id;
-		this.label=label;
+	public static Cambio valueOf(int id) {
+		for (Cambio cambio : Cambio.values()) {
+			if (id == cambio.getId())
+				return cambio;
+		}
+		return null;
 	}
+
+
+
+
+	
 }
