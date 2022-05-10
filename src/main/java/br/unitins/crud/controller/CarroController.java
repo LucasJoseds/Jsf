@@ -11,18 +11,27 @@ import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.CarroDAO;
 import br.unitins.crud.model.Cambio;
 import br.unitins.crud.model.Carro;
+import br.unitins.crud.model.Marca;
 
 @Named
 @ViewScoped
 public class CarroController implements Serializable {
 
 	private static final long serialVersionUID = 6622012672983485067L;
+	
 	private Carro carro;
+	
+	private String filtro;
+	
+
 	private List<Carro> listaCarros;
 
+	
 	public Carro getCarro() {
 		if (carro == null) {
 			carro = new Carro();
+			
+			carro.setMarca(new Marca());
 		}
 		return carro;
 	}
@@ -31,6 +40,15 @@ public class CarroController implements Serializable {
 		this.carro = carro;
 	}
 
+	public String getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+	
+	
 	public List<Carro> getListaCarros() {
 		if (listaCarros == null) {
 			CarroDAO dao = new CarroDAO();
@@ -55,11 +73,6 @@ public class CarroController implements Serializable {
 		if (carro.getNome().trim().equals("")) {
 
 			Util.addMessageError("O nome do veículo deve ser informado.");
-			return false;
-		}
-		if (carro.getMarca().trim().equals("")) {
-
-			Util.addMessageError("A marca do veículo deve ser informado.");
 			return false;
 		}
 
@@ -90,6 +103,12 @@ public class CarroController implements Serializable {
 
 	}
 
+	
+	public void pesquisar() {
+		
+		CarroDAO dao = new CarroDAO();
+		dao.findByNome(getFiltro());
+	}
 	public void alterar() {
 
 		if(!validar()) {

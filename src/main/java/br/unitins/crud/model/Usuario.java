@@ -3,8 +3,6 @@ package br.unitins.crud.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import br.unitins.crud.controller.Sexo;
-
 public class Usuario implements Cloneable {
 
 	private Integer id;

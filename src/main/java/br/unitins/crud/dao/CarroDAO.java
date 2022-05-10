@@ -10,13 +10,13 @@ import java.util.List;
 
 import br.unitins.crud.model.Cambio;
 import br.unitins.crud.model.Carro;
+import br.unitins.crud.model.Marca;
 
 public class CarroDAO implements DAO<Carro> {
 
-	
 	@Override
 	public boolean insert(Carro obj) {
-	
+
 		Connection conn = DAO.getConnection();
 		if (conn == null) {
 			return false;
@@ -27,12 +27,12 @@ public class CarroDAO implements DAO<Carro> {
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO carro ( ");
 		sql.append("  nome, ");
-		sql.append("  marca, ");
 		sql.append("  cor, ");
 		sql.append("  placa, ");
 		sql.append("  cambio, ");
 		sql.append("  potencia, ");
-		sql.append("  datalancamento ");
+		sql.append("  datalancamento, ");
+		sql.append("  id_marca ");
 		sql.append(") VALUES ( ");
 		sql.append("  ?, ");
 		sql.append("  ?, ");
@@ -47,26 +47,26 @@ public class CarroDAO implements DAO<Carro> {
 		try {
 			stat = conn.prepareStatement(sql.toString());
 			stat.setString(1, obj.getNome());
-			stat.setString(2, obj.getMarca());
-			stat.setString(3, obj.getCor());
-			stat.setString(4, obj.getPlaca());
-			
-			if(obj.getCambio()==null)
-				stat.setObject(5, null);
-			
-			else	
-			stat.setInt(5, obj.getCambio().getId());
-			
-			
-			stat.setString(6, obj.getPotencia());
-			
-			if (obj.getDatalancamento()==null)
-				stat.setObject(7, null);
-			
+			stat.setString(2, obj.getCor());
+			stat.setString(3, obj.getPlaca());
+
+			if (obj.getCambio() == null)
+				stat.setObject(4, null);
+
 			else
-			stat.setDate(7,Date.valueOf(obj.getDatalancamento()));
-		
-		
+				stat.setInt(4, obj.getCambio().getId());
+
+			stat.setString(5, obj.getPotencia());
+
+			if (obj.getDatalancamento() == null)
+				stat.setObject(6, null);
+
+			else
+				stat.setDate(6, Date.valueOf(obj.getDatalancamento()));
+
+	
+				stat.setInt(7, obj.getMarca().getId());
+
 			stat.execute();
 
 		} catch (SQLException e) {
@@ -87,8 +87,6 @@ public class CarroDAO implements DAO<Carro> {
 		}
 		return resultado;
 	}
-
-
 
 	@Override
 	public boolean delete(int id) {
@@ -132,7 +130,7 @@ public class CarroDAO implements DAO<Carro> {
 
 	@Override
 	public List<Carro> getAll() {
-		
+
 		Connection conn = DAO.getConnection();
 		if (conn == null) {
 			return null;
@@ -144,12 +142,12 @@ public class CarroDAO implements DAO<Carro> {
 		sql.append("SELECT ");
 		sql.append("  c.id, ");
 		sql.append("  c.nome, ");
-		sql.append("  c.marca, ");
 		sql.append("  c.cor, ");
 		sql.append("  c.placa, ");
 		sql.append("  c.cambio, ");
 		sql.append("  c.potencia, ");
-		sql.append("  c.datalancamento ");
+		sql.append("  c.datalancamento, ");
+		sql.append("  c.id_marca ");
 		sql.append("FROM ");
 		sql.append("  carro c ");
 		sql.append("ORDER BY ");
@@ -163,15 +161,17 @@ public class CarroDAO implements DAO<Carro> {
 				Carro carro = new Carro();
 				carro.setId(rs.getInt("id"));
 				carro.setNome(rs.getString("nome"));
-				carro.setMarca(rs.getString("marca"));
 				carro.setCor(rs.getString("cor"));
 				carro.setPlaca(rs.getString("placa"));
 				carro.setCambio(Cambio.valueOf(rs.getInt("cambio")));
 				carro.setPotencia(rs.getString("potencia"));
-				
+
 				Date data = rs.getDate("datalancamento");
 				if (data != null)
 					carro.setDatalancamento(data.toLocalDate());
+
+				carro.setMarca(new Marca());
+				carro.getMarca().setId(rs.getInt("id_marca"));
 
 				lista.add(carro);
 			}
@@ -205,12 +205,12 @@ public class CarroDAO implements DAO<Carro> {
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE carro SET  ");
 		sql.append("  nome = ?, ");
-		sql.append("  marca = ?, ");
 		sql.append("  cor = ?, ");
 		sql.append("  placa = ?, ");
 		sql.append("  cambio = ?, ");
 		sql.append("  potencia = ?, ");
-		sql.append("  datalancamento = ? ");
+		sql.append("  datalancamento = ?, ");
+		sql.append("  id_marca = ? ");
 		sql.append("WHERE ");
 		sql.append("  id = ?  ");
 
@@ -218,25 +218,26 @@ public class CarroDAO implements DAO<Carro> {
 		try {
 			stat = conn.prepareStatement(sql.toString());
 			stat.setString(1, obj.getNome());
-			stat.setString(2, obj.getMarca());
-			stat.setString(3, obj.getCor());
-			stat.setString(4, obj.getPlaca());
-			
-			if(obj.getCambio()==null)
-				stat.setObject(5, null);
-			
-			else	
-			stat.setInt(5, obj.getCambio().getId());
-			
-			
-			stat.setString(6, obj.getPotencia());
-			
-			if (obj.getDatalancamento()==null)
-				stat.setObject(7, null);
-			
+			stat.setString(2, obj.getCor());
+			stat.setString(3, obj.getPlaca());
+			if (obj.getCambio() == null)
+				stat.setObject(4, null);
+
 			else
-			stat.setDate(7,Date.valueOf(obj.getDatalancamento()));
-			
+				stat.setInt(4, obj.getCambio().getId());
+
+			stat.setString(5, obj.getPotencia());
+
+			if (obj.getDatalancamento() == null)
+				stat.setObject(6, null);
+
+			else
+				stat.setDate(6, Date.valueOf(obj.getDatalancamento()));
+			if ((obj.getMarca() == null || obj.getMarca().getId() == null))
+				stat.setObject(7, null);
+
+			stat.setInt(7, obj.getMarca().getId());
+
 			stat.setInt(8, obj.getId());
 
 			stat.execute();
@@ -259,7 +260,7 @@ public class CarroDAO implements DAO<Carro> {
 		}
 		return resultado;
 	}
-	
+
 	public Carro getById(int id) {
 
 		Connection conn = DAO.getConnection();
@@ -273,12 +274,12 @@ public class CarroDAO implements DAO<Carro> {
 		sql.append("SELECT ");
 		sql.append("  c.id, ");
 		sql.append("  c.nome, ");
-		sql.append("  c.marca, ");
 		sql.append("  c.cor, ");
 		sql.append("  c.placa, ");
 		sql.append("  c.cambio, ");
 		sql.append("  c.potencia, ");
-		sql.append("  c.datalancamento");
+		sql.append("  c.datalancamento, ");
+		sql.append("  c.id_marca ");
 		sql.append("FROM ");
 		sql.append("  carro c ");
 		sql.append("WHERE ");
@@ -289,21 +290,24 @@ public class CarroDAO implements DAO<Carro> {
 		try {
 			stat = conn.prepareStatement(sql.toString());
 			stat.setInt(1, id);
-			
+
 			rs = stat.executeQuery();
 			if (rs.next()) {
 				carro = new Carro();
 				carro.setId(rs.getInt("id"));
 				carro.setNome(rs.getString("nome"));
-				carro.setMarca(rs.getString("marca"));
 				carro.setCor(rs.getString("cor"));
 				carro.setPlaca(rs.getString("placa"));
 				carro.setCambio(Cambio.valueOf(rs.getInt("cambio")));
-				
+
 				carro.setPotencia(rs.getString("potencia"));
 				Date data = rs.getDate("datalancamento");
 				if (data != null)
 					carro.setDatalancamento(data.toLocalDate());
+
+				carro.setMarca(new Marca());
+				carro.getMarca().setId(rs.getInt("id_marca"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -320,6 +324,77 @@ public class CarroDAO implements DAO<Carro> {
 			e.printStackTrace();
 		}
 		return carro;
+	}
+
+	public List<Carro> findByNome(String nome) {
+
+		Connection conn = DAO.getConnection();
+
+		List<Carro> carro = new ArrayList<Carro>();
+
+		if (conn == null)
+			return null;
+
+		PreparedStatement stat = null;
+		ResultSet rs = null;
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT ");
+			sql.append("  c.id, ");
+			sql.append("  c.nome, ");
+			sql.append("  c.cor, ");
+			sql.append("  c.placa, ");
+			sql.append("  c.cambio, ");
+			sql.append("  c.potencia, ");
+			sql.append("  c.datalancamento, ");
+			sql.append("  m.id AS id_marca, ");
+			sql.append("  m.nome AS nome_marca ");
+			sql.append("FROM ");
+			sql.append("  carro c INNER JOIN marca m ON c.id_marca = m.id ");
+			sql.append("WHERE ");
+			sql.append("  c.nome iLIKE ? ");
+			sql.append("ORDER BY ");
+			sql.append("  c.nome ");
+
+			stat = conn.prepareStatement(sql.toString());
+			stat.setString(1, "%" + nome + "%");
+
+			rs = stat.executeQuery();
+			while (rs.next()) {
+				Carro c = new Carro();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCor(rs.getString("cor"));
+				c.setPlaca(rs.getString("placa"));
+				c.setCambio(Cambio.valueOf(rs.getInt("cambio")));
+				c.setPotencia(rs.getString("potencia"));
+				c.setMarca(new Marca());
+				c.getMarca().setId(rs.getInt("id_marca"));
+				c.getMarca().setNome(rs.getString("nome_marca"));
+
+				carro.add(c);
+			}
+
+		} catch (SQLException e) {
+			carro = null;
+			e.printStackTrace();
+		} finally {
+			try {
+				stat.close();
+			} catch (SQLException e) {
+			}
+			try {
+				rs.close();
+			} catch (SQLException e) {
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return carro;
+
 	}
 
 }

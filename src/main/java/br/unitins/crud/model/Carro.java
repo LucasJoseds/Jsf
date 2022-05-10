@@ -7,7 +7,7 @@ public class Carro implements Cloneable{
 
 	private Integer id;
 	private String nome;
-	private String marca;
+	private Marca marca;
 	private String cor;
 	private String placa;
 	private Cambio cambio;
@@ -48,12 +48,15 @@ public class Carro implements Cloneable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getMarca() {
+	
+	public Marca getMarca() {
 		return marca;
 	}
-	public void setMarca(String marca) {
+
+	public void setMarca(Marca marca) {
 		this.marca = marca;
 	}
+
 	public String getCor() {
 		return cor;
 	}

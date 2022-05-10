@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.UsuarioDAO;
 import br.unitins.crud.model.Endereco;
+import br.unitins.crud.model.Sexo;
 import br.unitins.crud.model.Usuario;
 
 @Named
