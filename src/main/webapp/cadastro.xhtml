@@ -106,14 +106,6 @@
 						</h:commandButton>
 
 
-						<h:commandButton style="margin-right:3px"
-							styleClass="btn btn-secondary" value="Alterar"
-							actionListener="#{carroController.alterar}"
-							disabled="#{carroController.carro.id == null}">
-							<f:ajax execute="form" render="messages form" />
-
-						</h:commandButton>
-
 						<h:commandButton styleClass="btn btn-danger" value="Limpar"
 							actionListener="#{carroController.limpar}">
 							<f:ajax render="form" />

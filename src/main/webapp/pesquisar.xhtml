@@ -2,7 +2,8 @@
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 
@@ -35,16 +36,28 @@
 					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Nome " />
 						<h:inputText styleClass="form-control"
-							value="#{carroController.filtro}" />
-					</div>
-
+							value="#{consultarController.filtro}" 
+							pt:placeholder="Informe o nome"/>
+						
 					
-					<div>
-						<h:commandButton style="margin-right:3px"
-							styleClass="btn btn-success" value="Buscar"
-							actionListener="#{carroController.pesquisar}">
+					</div>
+					
+					<div class="form-group col-md-6" style="margin-top: 47px;">
+						<h:commandButton 
+						
+							styleClass="btn btn-secondary" value="Buscar"
+							actionListener="#{consultarController.pesquisar}">
 							
 							<f:ajax execute="form" render="messages form dataTable" />
+							
+						</h:commandButton>
+					</div>
+					<div>
+						<h:commandButton style="margin-right:3px"
+							styleClass="btn btn-success" value="Novo"
+							actionListener="#{consultarController.novo}">
+							
+							<f:ajax execute="@this" />
 							
 						</h:commandButton>
 
@@ -52,7 +65,7 @@
 
 
 					<h:dataTable id="dataTable" styleClass="table table-striped"
-						value="#{carroController.listaCarros}" var="obj">
+						value="#{consultarController.listaCarros}" var="obj">
 
 						<h:column>
 							<f:facet name="header">Id</f:facet>
@@ -66,7 +79,7 @@
 
 						<h:column>
 							<f:facet name="header">Marca</f:facet>
-							<h:outputLabel value="#{obj.marca}" />
+							<h:outputLabel value="#{obj.marca.nome}" />
 						</h:column>
 
 

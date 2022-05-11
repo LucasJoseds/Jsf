@@ -1,5 +1,7 @@
 package br.unitins.crud.application;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -23,5 +25,14 @@ public class Util {
 		FacesContext.getCurrentInstance().addMessage(null, fm);
 	
 		
+	}
+	
+	
+	public static void redirect(String page) {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(page);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

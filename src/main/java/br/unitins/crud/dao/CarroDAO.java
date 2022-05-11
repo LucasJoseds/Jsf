@@ -147,9 +147,10 @@ public class CarroDAO implements DAO<Carro> {
 		sql.append("  c.cambio, ");
 		sql.append("  c.potencia, ");
 		sql.append("  c.datalancamento, ");
-		sql.append("  c.id_marca ");
+		sql.append("  m.id AS id_marca, ");
+		sql.append("  m.nome AS nome_marca ");
 		sql.append("FROM ");
-		sql.append("  carro c ");
+		sql.append("  carro c INNER JOIN marca m ON c.id_marca = m.id ");
 		sql.append("ORDER BY ");
 		sql.append("  c.nome ");
 
@@ -172,6 +173,7 @@ public class CarroDAO implements DAO<Carro> {
 
 				carro.setMarca(new Marca());
 				carro.getMarca().setId(rs.getInt("id_marca"));
+				carro.getMarca().setNome(rs.getString("nome_marca"));
 
 				lista.add(carro);
 			}
@@ -368,6 +370,11 @@ public class CarroDAO implements DAO<Carro> {
 				c.setPlaca(rs.getString("placa"));
 				c.setCambio(Cambio.valueOf(rs.getInt("cambio")));
 				c.setPotencia(rs.getString("potencia"));
+				
+				Date data = rs.getDate("datalancamento");
+				if (data != null)
+					c.setDatalancamento(data.toLocalDate());
+				
 				c.setMarca(new Marca());
 				c.getMarca().setId(rs.getInt("id_marca"));
 				c.getMarca().setNome(rs.getString("nome_marca"));

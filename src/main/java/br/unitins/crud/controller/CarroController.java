@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.CarroDAO;
+import br.unitins.crud.dao.MarcaDAO;
 import br.unitins.crud.model.Cambio;
 import br.unitins.crud.model.Carro;
 import br.unitins.crud.model.Marca;
@@ -18,19 +19,16 @@ import br.unitins.crud.model.Marca;
 public class CarroController implements Serializable {
 
 	private static final long serialVersionUID = 6622012672983485067L;
-	
+
 	private Carro carro;
-	
 	private String filtro;
-	
-
 	private List<Carro> listaCarros;
+	private List<Marca> listaMarcas;
 
-	
 	public Carro getCarro() {
 		if (carro == null) {
 			carro = new Carro();
-			
+
 			carro.setMarca(new Marca());
 		}
 		return carro;
@@ -43,19 +41,18 @@ public class CarroController implements Serializable {
 	public String getFiltro() {
 		return filtro;
 	}
-	
+
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
 	}
-	
-	
+
 	public List<Carro> getListaCarros() {
 		if (listaCarros == null) {
 			CarroDAO dao = new CarroDAO();
 			listaCarros = dao.getAll();
-			
-			if(listaCarros==null)
-			listaCarros = new ArrayList<Carro>();
+
+			if (listaCarros == null)
+				listaCarros = new ArrayList<Carro>();
 		}
 		return listaCarros;
 	}
@@ -92,39 +89,31 @@ public class CarroController implements Serializable {
 		}
 
 		CarroDAO dao = new CarroDAO();
-		if(!dao.insert(getCarro())) {
+		if (!dao.insert(getCarro())) {
 			Util.addMessageInfo("Erro ao realizar cadastro");
-			return;	
+			return;
 		}
 		limpar();
-		
+
 		setListaCarros(null);
 		Util.addMessageInfo("Inclusão realizada com sucesso");
 
 	}
 
-	
-	public void pesquisar() {
-		
-		CarroDAO dao = new CarroDAO();
-		dao.findByNome(getFiltro());
-	}
 	public void alterar() {
 
-		if(!validar()) {
+		if (!validar()) {
 			return;
 		}
-		
-	CarroDAO dao= new CarroDAO();
-		if(!dao.update(getCarro())) {
+
+		CarroDAO dao = new CarroDAO();
+		if (!dao.update(getCarro())) {
 			Util.addMessageError("Erro ao atualizar os dados");
 			return;
 		}
 		limpar();
 		setListaCarros(null);
 		Util.addMessageInfo("Atualização realizada com sucesso");
-		
-		
 
 	}
 
@@ -134,19 +123,19 @@ public class CarroController implements Serializable {
 	}
 
 	public void excluir(int id) {
-		
-		CarroDAO dao= new CarroDAO();
-		if(!dao.delete(id)) {
+
+		CarroDAO dao = new CarroDAO();
+		if (!dao.delete(id)) {
 			Util.addMessageError("Erro ao deletar");
 			return;
 		}
 		setListaCarros(null);
 		Util.addMessageInfo("Deletado com sucesso");
 	}
-	
+
 	public void editar(int id) {
-		
-		CarroDAO dao= new CarroDAO();
+
+		CarroDAO dao = new CarroDAO();
 		setCarro(dao.getById(id));
 	}
 
@@ -156,4 +145,15 @@ public class CarroController implements Serializable {
 
 	}
 
+	public List<Marca> getListaMarca() {
+		if (listaMarcas == null) {
+			MarcaDAO dao = new MarcaDAO();
+			listaMarcas = dao.getAll();
+
+			if (listaMarcas == null)
+				listaMarcas = new ArrayList<Marca>();
+		}
+		return listaMarcas;
+
+	}
 }
