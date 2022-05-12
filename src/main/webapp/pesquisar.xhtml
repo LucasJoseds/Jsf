@@ -30,7 +30,8 @@
 
 			<div class="card-body">
 
-				<h:messages style="color:grewn;" />
+
+				<h:messages id="messages" style="color:grewn;" />
 				<h:form id="form" styleClass="row g-3">
 
 					<div class="form-group col-md-6">
@@ -111,12 +112,13 @@
 						<h:column>
 							<f:facet name="header">Ações</f:facet>
 							<h:commandButton value="Editar"
-								actionListener="#{carroController.editar(obj.id)}" >
-								<f:ajax execute="@this" render="form" />
+								actionListener="#{consultarController.editar(obj.id)}" >
+								<f:ajax execute="@this" render="@form" />
+								
 								</h:commandButton>
 
-							<h:commandButton value="Exclur"
-								actionListener="#{carroController.remover(obj)}" >
+							<h:commandButton value="Excluir"
+								actionListener="#{consultarController.exlcuir(obj.id)}" >
 								<f:ajax execute="@this" render="form" />
 								</h:commandButton>
 

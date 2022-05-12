@@ -29,7 +29,7 @@
 
 			<div class="card-body">
 
-				<h:messages style="color:grewn;" />
+				<h:messages id="messages" style="color:grewn;" />
 				<h:form id="form" styleClass="row g-3">
 
 					<div class="form-group col-md-6">
@@ -40,8 +40,20 @@
 
 					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Marca " />
-						<h:inputText styleClass="form-control"
-							value="#{carroController.carro.marca.nome}" />
+
+
+						<h:selectOneMenu styleClass="form-control"
+							value="#{carroController.carro.marca}">
+
+							<f:selectItem itemLabel="Selecione..." />
+
+							<f:selectItems 
+							value="#{carroController.listaMarcas}"
+							var="obj" 
+							itemValue="#{obj}" 
+							itemLabel="#{obj.nome}"/> 
+
+						</h:selectOneMenu>
 					</div>
 
 					<div class="form-group col-md-6">
@@ -114,66 +126,7 @@
 					</div>
 
 
-					<h:dataTable id="dataTable" styleClass="table table-striped"
-						value="#{carroController.listaCarros}" var="obj">
-
-						<h:column>
-							<f:facet name="header">Id</f:facet>
-							<h:outputLabel value="#{obj.id}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Nome</f:facet>
-							<h:outputLabel value="#{obj.nome}" />
-						</h:column>
-
-
-						<h:column>
-							<f:facet name="header">Marca</f:facet>
-							<h:outputLabel value="#{obj.marca.nome}" />
-						</h:column>
-
-
-						<h:column>
-							<f:facet name="header">Cor</f:facet>
-							<h:outputLabel value="#{obj.cor}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Cambio</f:facet>
-							<h:outputLabel value="#{obj.cambio.label}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Placa</f:facet>
-							<h:outputLabel value="#{obj.placa}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Potência</f:facet>
-							<h:outputLabel value="#{obj.potencia}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Data de lançamento</f:facet>
-							<h:outputLabel value="#{obj.datalancamento}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-							</h:outputLabel>
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Ações</f:facet>
-							<h:commandButton value="Editar"
-								actionListener="#{carroController.editar(obj.id)}" >
-								<f:ajax execute="@this" render="form" />
-								</h:commandButton>
-
-							<h:commandButton value="Exclur"
-								actionListener="#{carroController.remover(obj)}" >
-								<f:ajax execute="@this" render="form" />
-								</h:commandButton>
-
-						</h:column>
-
-					</h:dataTable>
-
+					
 				</h:form>
 
 			</div>

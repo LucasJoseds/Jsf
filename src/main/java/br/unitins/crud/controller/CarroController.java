@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -18,13 +21,28 @@ import br.unitins.crud.model.Marca;
 @ViewScoped
 public class CarroController implements Serializable {
 
-	private static final long serialVersionUID = 6622012672983485067L;
 
+
+	private static final long serialVersionUID = 3082786856774448591L;
 	private Carro carro;
 	private String filtro;
 	private List<Carro> listaCarros;
 	private List<Marca> listaMarcas;
 
+	
+	public CarroController() {
+		
+		Flash flash= FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.keep("carroFlash");
+		setCarro((Carro)flash.get("carroFlash"));
+		
+	
+
+	}
+	
+	
+	
+	
 	public Carro getCarro() {
 		if (carro == null) {
 			carro = new Carro();
@@ -64,6 +82,8 @@ public class CarroController implements Serializable {
 	public Cambio[] getListaCambio() {
 		return Cambio.values();
 	}
+	
+	
 
 	public boolean validar() {
 
@@ -113,8 +133,16 @@ public class CarroController implements Serializable {
 		}
 		limpar();
 		setListaCarros(null);
-		Util.addMessageInfo("Atualização realizada com sucesso");
-
+		
+		FacesContext.getCurrentInstance().addMessage(
+		        null, new FacesMessage("Alteração realizado com sucesso!"));
+		 
+		  FacesContext.getCurrentInstance()
+		      .getExternalContext()
+		      .getFlash().setKeepMessages(true);
+		  
+		Util.redirect("pesquisar.xhtml");
+		
 	}
 
 	public void remover() {
@@ -132,12 +160,13 @@ public class CarroController implements Serializable {
 		setListaCarros(null);
 		Util.addMessageInfo("Deletado com sucesso");
 	}
-
-	public void editar(int id) {
-
-		CarroDAO dao = new CarroDAO();
-		setCarro(dao.getById(id));
+	
+	
+	public void voltar() {
+		
+		Util.redirect("pesquisar.xhtml");
 	}
+
 
 	public void limpar() {
 
@@ -145,7 +174,7 @@ public class CarroController implements Serializable {
 
 	}
 
-	public List<Marca> getListaMarca() {
+	public List<Marca> getListaMarcas() {
 		if (listaMarcas == null) {
 			MarcaDAO dao = new MarcaDAO();
 			listaMarcas = dao.getAll();
