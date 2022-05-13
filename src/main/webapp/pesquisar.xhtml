@@ -15,7 +15,7 @@
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 		crossorigin="anonymous" />
 
-	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="successMessage.css" />
 
 </h:head>
 
@@ -31,14 +31,23 @@
 			<div class="card-body">
 
 
-				<h:messages id="messages" style="color:grewn;" />
+				<h:messages id="messages" styleClass="msgs1"
+				style="margin-left: -32px;" />
 				<h:form id="form" styleClass="row g-3">
 
 					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="Nome " />
-						<h:inputText styleClass="form-control"
-							value="#{consultarController.filtro}" 
-							pt:placeholder="Informe o nome"/>
+						
+						<h:inputText 
+							id="filtro"
+							class="form-control"
+							value="#{consultarController.filtro}"	
+							required="true"
+							requiredMessage="Informe o nome para a busca">
+							
+							</h:inputText>
+							
+							<h:message for="filtro" style="color:red"/>
 						
 					
 					</div>
@@ -49,7 +58,7 @@
 							styleClass="btn btn-secondary" value="Buscar"
 							actionListener="#{consultarController.pesquisar}">
 							
-							<f:ajax execute="form" render="messages form dataTable" />
+							<f:ajax execute="form" render="form dataTable" />
 							
 						</h:commandButton>
 					</div>

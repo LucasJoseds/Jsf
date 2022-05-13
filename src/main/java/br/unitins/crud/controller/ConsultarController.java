@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotBlank;
 
 import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.CarroDAO;
@@ -19,6 +20,8 @@ public class ConsultarController implements Serializable{
 
 	private static final long serialVersionUID = 4990676088730157416L;
 	private List<Carro> listaCarros;
+	
+	@NotBlank(message="Informe o nome para a busca")
 	private String filtro;
 	
 	
