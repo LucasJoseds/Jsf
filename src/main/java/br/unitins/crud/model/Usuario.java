@@ -9,7 +9,7 @@ public class Usuario implements Cloneable {
 	private String nome;
 	private Sexo sexo;
 	private Endereco endereco;
-	private String email;
+	private String login;
 	private String cpf;
 	private String telefone;
 	private String senha;
@@ -73,12 +73,12 @@ public class Usuario implements Cloneable {
 	}
 
 	
-	public String getEmail() {
-		return email;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getCpf() {

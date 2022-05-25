@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.UsuarioDAO;
 import br.unitins.crud.model.Endereco;
+import br.unitins.crud.model.Perfil;
 import br.unitins.crud.model.Sexo;
 import br.unitins.crud.model.Usuario;
 
@@ -54,6 +55,11 @@ public class UsuarioController implements Serializable {
 
 		return Sexo.values();
 
+	}
+	public Perfil[] getListaPerfil() {
+		
+		return Perfil.values();
+		
 	}
 
 	public boolean validar() {

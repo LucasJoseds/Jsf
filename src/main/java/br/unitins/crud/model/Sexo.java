@@ -31,5 +31,14 @@ public enum Sexo {
 	}
 	
 	
+	public static Sexo valueOf(int id) {
+		for (Sexo sexo : Sexo.values()) {
+			if (id == sexo.getId())
+				return sexo;
+		}
+		return null;
+	}
+	
+	
 	
 }
