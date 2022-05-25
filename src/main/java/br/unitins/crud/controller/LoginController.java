@@ -1,11 +1,10 @@
 package br.unitins.crud.controller;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import br.unitins.crud.application.Util;
+import br.unitins.crud.dao.UsuarioDAO;
 import br.unitins.crud.model.Usuario;
 
 @Named
@@ -28,8 +27,18 @@ public class LoginController {
 
 	
 	public void login() {
-		System.out.println(usuario.getLogin());
-		System.out.println(usuario.getSenha());
+		
+		String hash = Util.hash(getUsuario());
+		UsuarioDAO dao = new UsuarioDAO();
+		Usuario usuario = dao.verificarLogin(getUsuario().getLogin(), hash);
+		
+		if (usuario == null) {
+			Util.addMessageError("Login ou Senha inválido.");
+			return;
+		}
+		
+		Util.redirect("menu-principal.xhtml");
+		
 	}
 	
 	public void novoCadastro(){

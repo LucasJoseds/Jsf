@@ -13,19 +13,20 @@
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 		crossorigin="anonymous" />
 
-	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="successMessage.css" />
 
 </h:head>
 
 <h:body>
 
+	<h:messages id="messages" style="color:grewn;" />
+	
 	<div style="width: 50%; margin: auto; margin-top: 100px">
 
 		<div class="card">
 
 			<h3 class="card-header">Cadastro de usuário</h3>
 			<div class="card-body">
-				<h:messages id="messages" style="color:grewn;" />
 				<h:form id="form" styleClass="row g-3">
 				
 				
@@ -37,7 +38,7 @@
 				
 					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="E-mail " />
-						<h:inputSecret styleClass="form-control"
+						<h:inputText styleClass="form-control"
 							value="#{usuarioController.usuario.login}" />
 					</div>
 					<div class="form-group col-md-3">
@@ -45,7 +46,7 @@
 
 
 						<h:selectOneMenu styleClass="form-control"
-							value="#{carroController.carro.cambio}">
+							value="#{usuarioController.usuario.sexo}">
 
 							<f:selectItem itemLabel="Selecione..." />
 
@@ -56,7 +57,7 @@
 					</div>
 					<div class="form-group col-md-6">
 						<h:outputLabel styleClass="form-label" value="CPF " />
-						<h:inputSecret styleClass="form-control"
+						<h:inputText styleClass="form-control"
 							value="#{usuarioController.usuario.cpf}" />
 					</div>
 					<div class="form-group col-md-3">
@@ -79,7 +80,7 @@
 
 
 						<h:selectOneMenu styleClass="form-control"
-							value="#{carroController.carro.cambio}">
+							value="#{usuarioController.usuario.perfil}">
 
 							<f:selectItem itemLabel="Selecione..." />
 

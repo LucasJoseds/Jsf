@@ -80,11 +80,15 @@ public class UsuarioController implements Serializable {
 	}
 
 	public void cadastrar() {
+		UsuarioDAO dao = new UsuarioDAO();
 
+		String senha = getUsuario().getLogin() + getUsuario().getSenha();
+		senha = Util.hash(senha);
+		getUsuario().setSenha(senha);
+		
 		if (!validar())
 			return;
 		
-		UsuarioDAO dao = new UsuarioDAO();
 		if (!dao.insert(getUsuario())) {
 			Util.addMessageInfo("Erro ao tentar incluir o usuário.");
 			return;
@@ -96,11 +100,14 @@ public class UsuarioController implements Serializable {
 	}
 
 	public void alterar() {
-
+		UsuarioDAO dao= new UsuarioDAO();
+		
+		String senha = getUsuario().getLogin() + getUsuario().getSenha();
+		senha = Util.hash(senha);
+		getUsuario().setSenha(senha);
+		
 		if (!validar())
 			return;
-
-		UsuarioDAO dao= new UsuarioDAO();
 		
 		if(dao.update(getUsuario())) {
 			
