@@ -1,17 +1,18 @@
 package br.unitins.crud.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import br.unitins.crud.model.Marca;
 
 public class MarcaDAO implements DAO<Marca> {
 
-	
 	public List<Marca> getAll() {
-		
+
 		Connection conn = DAO.getConnection();
 		if (conn == null) {
 			return null;
@@ -36,7 +37,6 @@ public class MarcaDAO implements DAO<Marca> {
 				Marca marca = new Marca();
 				marca.setId(rs.getInt("id"));
 				marca.setNome(rs.getString("nome"));
-
 
 				lista.add(marca);
 			}
@@ -74,6 +74,54 @@ public class MarcaDAO implements DAO<Marca> {
 	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public Marca getById(int id) {
+
+		Connection conn = DAO.getConnection();
+		if (conn == null) {
+			return null;
+		}
+
+		Marca marca = null;
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("  m.id, ");
+		sql.append("  m.nome ");
+		sql.append("FROM ");
+		sql.append("  Marca m ");
+		sql.append("WHERE ");
+		sql.append("  m.id = ? ");
+
+		ResultSet rs = null;
+		PreparedStatement stat = null;
+		try {
+			stat = conn.prepareStatement(sql.toString());
+			stat.setInt(1, id);
+
+			rs = stat.executeQuery();
+			if (rs.next()) {
+				marca = new Marca();
+				marca.setId(rs.getInt("id"));
+				marca.setNome(rs.getString("nome"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return marca;
 	}
 
 }

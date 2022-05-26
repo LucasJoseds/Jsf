@@ -46,13 +46,13 @@
 						<h:selectOneMenu styleClass="form-control"
 							value="#{carroController.carro.marca}">
 
-							<f:selectItem itemLabel="Selecione..." />
+							<f:selectItem itemLabel="Selecione a Marca" />
 
 							<f:selectItems 
 							value="#{carroController.listaMarcas}"
-							var="obj" 
-							itemValue="#{obj}" 
-							itemLabel="#{obj.nome}"/> 
+							var="marca" 
+							itemLabel="#{marca.nome}" 
+							itemValue="#{marca}" />
 
 						</h:selectOneMenu>
 					</div>

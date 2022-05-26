@@ -21,7 +21,6 @@ public class ConsultarController implements Serializable{
 	private static final long serialVersionUID = 4990676088730157416L;
 	private List<Carro> listaCarros;
 	
-	@NotBlank(message="Informe o nome para a busca")
 	private String filtro;
 	
 	
