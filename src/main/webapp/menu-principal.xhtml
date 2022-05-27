@@ -8,7 +8,7 @@
 
 <h:head>
 
-	<title>Login</title>
+	<title>Home</title>
 
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
 	<h:outputStylesheet library="css" name="card-game.css" />
@@ -25,7 +25,7 @@
 
 <h:body>
 
-	<div class="wrapper">
+	<div>
 		<ui:insert name="menu">
 			<nav class="navbar navbar-expand-lg bg-dark">
 				<div class="container-fluid">
@@ -43,14 +43,12 @@
 								style="text-decoration: none; color: white"
 								class="nav-link active" aria-current="page"
 								href="menu-principal.xhtml">Home</a></li>
-							<li class="nav-item"><a
-								style="text-decoration: none; color: white" class="nav-link"
-								href="login.xhtml">Login</a></li>
+
 							<li class="nav-item dropdown"><a
 								style="text-decoration: none; color: white"
 								class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-								role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Mais </a>
+								role="button whithe" data-bs-toggle="dropdown"
+								aria-expanded="false"> Mais </a>
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 									<li><a style="text-decoration: none; color: black"
 										class="dropdown-item" href="cadastro.xhtml">Cadastro de
@@ -93,52 +91,56 @@
 						</h:commandButton>
 					</div>
 
+
 				</div>
-				
-			
-						<ui:insert name="conteudo">
-								<div class="container">
-									<ui:repeat id="card" var="obj"
-										value="#{consultarController.listaCarros}">
 
-										<h:messages id="messages" errorStyle="color:red;margin:8px;"
-											warnStyle="color:yellow;margin:8px;"
-											infoStyle="color:green;margin:8px;" />
-										<div class="card-game">
-											<div class="main-info">
-												<p>
-													#{obj.nome}
-													<h:commandLink value="🔎"
-														actionListener="#{jogoController.detalhes(obj)}"
-														class="game-link"></h:commandLink>
-												</p>
+		
+
+				<ui:insert name="conteudo">
+
+					<ui:repeat id="card" var="obj"
+						value="#{consultarController.listaCarros}">
+
+							<div class="card" style="width: 18rem;">
+
+								<div class="card-body">
+									<h5 class="card-title">#{obj.nome}</h5>
+									<p class="card-text">Marca: #{obj.marca.nome}</p>
+									<p class="card-text">Câmbio: #{obj.cambio.label}</p>
+									<p class="card-text">Potência: #{obj.potencia}</p>
+									<p class="card-text">
+										Lançamento:
 
 
-												<p class="card-text">#{obj.marca.nome}</p>
-												<div class="buy-container">
-													<h:commandButton class="cart-container" value="🛒"
-														actionListener="#{carroController.editar(obj)}">
-														<f:ajax execute="@this" render="messages attCarrinho" />
-													</h:commandButton>
-												</div>
-											</div>
-										</div>
+										<h:outputLabel styleClass="card-text"
+											value="#{obj.datalancamento}">
+											<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+										</h:outputLabel>
 
-									</ui:repeat>
+									</p>
 
+
+									<h:commandButton class="cart-container" value="🛒"
+										actionListener="#{jogoController.comprar(obj)}">
+										<f:ajax execute="@this" render="messages attCarrinho" />
+									</h:commandButton>
 								</div>
-							</ui:insert>
-					
-			</h:form>
+							</div>
+
+					</ui:repeat>
+				</ui:insert>
+				
+		</h:form>
+
+		</div>
 		</div>
 
 
 
-
-		<div class="footer" style="text-align: center;">
-			<h:outputText value="2022 - UNITINS - Todos os direitos reservados." />
-		</div>
-	</div>
+	
+	<footer class="footer" style="text-align: center;">
+		<h:outputText value="2022 - UNITINS - Todos os direitos reservados." />
+	</footer>
 
 </h:body>
 </html>
