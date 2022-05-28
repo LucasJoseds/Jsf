@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="menu-principal.xhtml">
+
+<ui:define name="conteudo">
+
+		<div style="width: 80%; margin: auto; margin-top: 100px;" class="main">
+
+
+			<div class="card">
+
+				<h3 class="card-header">Buscar Veiculo</h3>
+
+				<div class="card-body">
+
+
+					<h:messages id="messages" styleClass="msgs1"
+						style="margin-left: -32px;" />
+					<h:form id="form" styleClass="row g-3">
+
+						<div class="form-group col-md-6">
+							<h:outputLabel styleClass="form-label" value="Nome " />
+
+							<h:inputText id="filtro" class="form-control"
+								value="#{consultarController.filtro}" required="true"
+								requiredMessage="Informe o nome para a busca">
+
+							</h:inputText>
+
+							<h:message for="filtro" style="color:red" />
+
+
+						</div>
+
+						<div class="form-group col-md-6" style="margin-top: 47px;">
+							<h:commandButton styleClass="btn btn-secondary" value="Buscar"
+								actionListener="#{consultarController.pesquisar}">
+
+								<f:ajax execute="form" render="form dataTable" />
+
+							</h:commandButton>
+						</div>
+						<div>
+							<h:commandButton style="margin-right:3px"
+								styleClass="btn btn-success" value="Novo"
+								actionListener="#{consultarController.novo}">
+
+								<f:ajax execute="@this" />
+
+							</h:commandButton>
+
+						</div>
+
+
+						<h:dataTable id="dataTable" styleClass="table table-striped"
+							value="#{consultarController.listaCarros}" var="obj">
+
+							<h:column>
+								<f:facet name="header">Id</f:facet>
+								<h:outputLabel value="#{obj.id}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Nome</f:facet>
+								<h:outputLabel value="#{obj.nome}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">Marca</f:facet>
+								<h:outputLabel value="#{obj.marca.nome}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">Cor</f:facet>
+								<h:outputLabel value="#{obj.cor}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Cambio</f:facet>
+								<h:outputLabel value="#{obj.cambio.label}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Placa</f:facet>
+								<h:outputLabel value="#{obj.placa}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Potência</f:facet>
+								<h:outputLabel value="#{obj.potencia}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Data de lançamento</f:facet>
+								<h:outputLabel value="#{obj.datalancamento}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</h:outputLabel>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Ações</f:facet>
+								<h:commandButton value="Editar"
+									actionListener="#{consultarController.editar(obj.id)}">
+									<f:ajax execute="@this" render="@form" />
+
+								</h:commandButton>
+
+								<h:commandButton value="Excluir"
+									actionListener="#{consultarController.exlcuir(obj.id)}">
+									<f:ajax execute="@this" render="form" />
+								</h:commandButton>
+
+							</h:column>
+
+						</h:dataTable>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+</html>

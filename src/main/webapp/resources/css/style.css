@@ -1,0 +1,19 @@
+.botao-limpar{
+	width: 24%;
+    margin: auto;
+  	margin-top: -39px;
+}
+.aa{
+	font-size: 90px;
+}
+
+
+li{
+	margin-top:"10px";
+	background-color: red;
+    color: white;
+    padding: 6px 20px;
+    border-radius: 5px;
+    width: 50%;
+}
+
