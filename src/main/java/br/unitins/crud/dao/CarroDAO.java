@@ -260,6 +260,7 @@ public class CarroDAO implements DAO<Carro> {
 		return resultado;
 	}
 	
+	
 	public Carro getById(int id) {
 
 		Connection conn = DAO.getConnection();
@@ -278,7 +279,7 @@ public class CarroDAO implements DAO<Carro> {
 		sql.append("  c.placa, ");
 		sql.append("  c.cambio, ");
 		sql.append("  c.potencia, ");
-		sql.append("  c.datalancamento");
+		sql.append("  c.datalancamento ");
 		sql.append("FROM ");
 		sql.append("  carro c ");
 		sql.append("WHERE ");
