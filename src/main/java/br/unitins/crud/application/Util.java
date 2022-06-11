@@ -1,8 +1,14 @@
 package br.unitins.crud.application;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+import br.unitins.crud.model.Usuario;
 
 public class Util {
 
@@ -23,5 +29,22 @@ public class Util {
 		FacesContext.getCurrentInstance().addMessage(null, fm);
 	
 		
+	}
+	
+	public static String hash(String valor) {
+		return DigestUtils.sha256Hex(valor);
+	}
+	
+	public static String hash(Usuario usuario) {
+		return DigestUtils.sha256Hex(usuario.getLogin()+usuario.getSenha());
+	}
+	
+	
+	public static void redirect(String page) {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(page);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

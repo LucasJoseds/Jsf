@@ -10,6 +10,8 @@ import javax.inject.Named;
 import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.UsuarioDAO;
 import br.unitins.crud.model.Endereco;
+import br.unitins.crud.model.Perfil;
+import br.unitins.crud.model.Sexo;
 import br.unitins.crud.model.Usuario;
 
 @Named
@@ -54,6 +56,11 @@ public class UsuarioController implements Serializable {
 		return Sexo.values();
 
 	}
+	public Perfil[] getListaPerfil() {
+		
+		return Perfil.values();
+		
+	}
 
 	public boolean validar() {
 
@@ -73,11 +80,15 @@ public class UsuarioController implements Serializable {
 	}
 
 	public void cadastrar() {
+		UsuarioDAO dao = new UsuarioDAO();
 
+		String senha = getUsuario().getLogin() + getUsuario().getSenha();
+		senha = Util.hash(senha);
+		getUsuario().setSenha(senha);
+		
 		if (!validar())
 			return;
 		
-		UsuarioDAO dao = new UsuarioDAO();
 		if (!dao.insert(getUsuario())) {
 			Util.addMessageInfo("Erro ao tentar incluir o usuário.");
 			return;
@@ -89,11 +100,14 @@ public class UsuarioController implements Serializable {
 	}
 
 	public void alterar() {
-
+		UsuarioDAO dao= new UsuarioDAO();
+		
+		String senha = getUsuario().getLogin() + getUsuario().getSenha();
+		senha = Util.hash(senha);
+		getUsuario().setSenha(senha);
+		
 		if (!validar())
 			return;
-
-		UsuarioDAO dao= new UsuarioDAO();
 		
 		if(dao.update(getUsuario())) {
 			

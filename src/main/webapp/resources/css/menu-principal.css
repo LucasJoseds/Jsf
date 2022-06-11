@@ -1,0 +1,34 @@
+.input {
+	width: 65%;
+	float: left;
+}
+
+.pesquisa {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.botao {
+	margin-left: 5px;
+}
+
+.barraPesquisa {
+	position: absolute;
+	top: 0;
+	right: 35%;
+	width: 30%;
+}
+
+.footer{
+	position: fixed;
+    bottom: 15px;
+    width: 100vw;
+}
+
+.dropdown-item{
+	text-decoration: none;
+	color:white;
+}
