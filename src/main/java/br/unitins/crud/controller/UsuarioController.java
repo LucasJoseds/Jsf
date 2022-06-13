@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -95,7 +97,16 @@ public class UsuarioController implements Serializable {
 		}
 		limpar();
 		setListaUsuarios(null);
-		Util.addMessageInfo("Inclusão realizada com sucesso.");
+		
+		FacesContext.getCurrentInstance().addMessage(
+		        null, new FacesMessage("Cadastro realizado com sucesso!"));
+		 
+		  FacesContext.getCurrentInstance()
+		      .getExternalContext()
+		      .getFlash().setKeepMessages(true);
+		  
+		Util.redirect("login.xhtml");
+		
 
 	}
 

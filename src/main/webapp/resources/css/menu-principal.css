@@ -16,10 +16,8 @@
 }
 
 .barraPesquisa {
-	position: absolute;
-	top: 0;
-	right: 35%;
-	width: 30%;
+	margin:auto;
+	width: 70%;
 }
 
 .footer{

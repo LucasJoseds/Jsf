@@ -3,6 +3,7 @@ package br.unitins.crud.controller;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
+import br.unitins.crud.application.Session;
 import br.unitins.crud.application.Util;
 import br.unitins.crud.dao.UsuarioDAO;
 import br.unitins.crud.model.Usuario;
@@ -36,6 +37,8 @@ public class LoginController {
 			Util.addMessageError("Login ou Senha inválido.");
 			return;
 		}
+		
+		Session.getInstance().set("usuarioLogado", usuario);
 		
 		Util.redirect("menu-principal.xhtml");
 		
