@@ -41,6 +41,11 @@ public class CarroController implements Serializable {
 	}
 	
 	
+	public String formatPrice(Double price) {
+		 return Util.formatPrice(price);
+	}
+	
+	
 	
 	
 	public Carro getCarro() {
@@ -144,6 +149,7 @@ public class CarroController implements Serializable {
 		Util.redirect("pesquisar.xhtml");
 		
 	}
+	
 
 	public void remover() {
 		excluir(getCarro().getId());

@@ -39,7 +39,7 @@ public class LoginController {
 		}
 		
 		Session.getInstance().set("usuarioLogado", usuario);
-		
+
 		Util.redirect("menu-principal.xhtml");
 		
 	}

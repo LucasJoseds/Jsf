@@ -6,7 +6,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<ui:composition template="menu-principal.xhtml">
+<ui:composition template="template.xhtml">
 
 <ui:define name="conteudo">
 
@@ -94,6 +94,10 @@
 							<h:column>
 								<f:facet name="header">Potência</f:facet>
 								<h:outputLabel value="#{obj.potencia}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Preço</f:facet>
+								<h:outputLabel value="#{obj.preco}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">Data de lançamento</f:facet>

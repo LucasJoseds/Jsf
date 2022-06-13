@@ -13,7 +13,7 @@ public class Carro implements Cloneable{
 	private Cambio cambio;
 	private String potencia;
 	private LocalDate datalancamento;
-	
+	private double preco;
 		
 	public Cambio getCambio() {
 		return cambio;
@@ -82,6 +82,14 @@ public class Carro implements Cloneable{
 
 	public void setDatalancamento(LocalDate datalancamento) {
 		this.datalancamento = datalancamento;
+	}
+	
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
 	}
 
 	@Override

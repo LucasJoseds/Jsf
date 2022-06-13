@@ -61,9 +61,6 @@
 									class="dropdown-item" href="cadastro-marcas.xhtml">Cadastro
 										de Marcas</a></li>
 								<li><a style="text-decoration: none; color: black"
-									class="dropdown-item" href="carrinho.xhtml">Carrinho
-										</a></li>
-								<li><a style="text-decoration: none; color: black"
 									class="dropdown-item" href="historico.xhtml">Histórico de
 										vendas</a></li>
 							</ul></li>
@@ -74,90 +71,14 @@
 		</nav>
 
 	</ui:insert>
-	<div>
-		<div style="width: 100%; text-align: right;">
-			<h:form rendered="#{homeController.usuarioLogado != null}">
-				<h:outputLabel value="Olá #{homeController.usuarioLogado.nome}" />
-				<h:commandButton value=" (Sair)"
-					action="#{homeController.encerrarSessao}" style="color:black" />
-			</h:form>
-		</div>
-	</div>
+	
+		<ui:insert name="conteudo">
 
-	<h:form id="form">
-		<div class="barraPesquisa">
-			<div class="pesquisa">
-
-					
-				<div class="input">
-
-					<h:inputText class="form-control me-2"
-						value="#{vendaController.filtro}" pt:placeholder="Pesquisar" />
-				</div>
-
-				<div class="botao">
-					<h:commandButton style="margin-left:2px"
-						styleClass="btn btn-secondary" value="Pesquisar"
-						actionListener="#{vendaController.pesquisar}">
-						<f:ajax execute="form" render="form card" />
-
-					</h:commandButton>
-				</div>
-			</div>
-
-			<div style="width: 100%; text-align: right;">
-				<h:form rendered="#{homeController.usuarioLogado != null}">
-					<h:outputLabel value="Olá #{homeController.usuarioLogado.nome}" />
-					<h:commandButton value=" (Sair)"
-						action="#{homeController.encerrarSessao}" style="color:black" />
-				</h:form>
-			</div>
+		
+		</ui:insert>
 
 
-			<ui:insert name="conteudo">
-
-				<h:form>
-					<ui:repeat id="card" var="obj"
-						value="#{vendaController.listaCarros}">
-
-						<div class="card" style="width: 18rem;">
-
-							<div class="card-body">
-								<h5 class="card-title">#{obj.nome}</h5>
-								<p class="card-text">Marca: #{obj.marca.nome}</p>
-								<p class="card-text">Câmbio: #{obj.cambio.label}</p>
-								<p class="card-text">Potência: #{obj.potencia}</p>
-								
-									<div class="price-container">
-										<p>R$ #{carroController.formatPrice(obj.preco)}</p>
-									</div>
-								<p class="card-text">
-									Lançamento:
-
-
-									<h:outputLabel styleClass="card-text"
-										value="#{obj.datalancamento}">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									</h:outputLabel>
-
-								</p>
-
-
-								<h:commandButton class="cart-container" value="Adicionar ao carrinho"
-									actionListener="#{vendaController.comprar(obj)}">
-									<f:ajax execute="@this" render="messages" />
-								</h:commandButton>
-							</div>
-
-						</div>
-
-					</ui:repeat>
-
-				</h:form>
-
-			</ui:insert>
-		</div>
-	</h:form>
+	
 
 
 

@@ -1,6 +1,7 @@
 package br.unitins.crud.application;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -46,5 +47,10 @@ public class Util {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static String formatPrice(Double preco) {
+		 DecimalFormat formatter = new DecimalFormat("###,###,##0.00");
+		 return formatter.format(preco);
 	}
 }
