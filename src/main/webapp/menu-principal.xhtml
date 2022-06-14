@@ -11,6 +11,7 @@
 	<title>Home</title>
 
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+
 	<h:outputStylesheet library="css" name="card-game.css" />
 	<h:outputStylesheet library="css" name="menu-principal.css" />
 
@@ -20,7 +21,10 @@
 		integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
 		crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<meta name='viewport' content='width=device-width, initial-scale=1'/>
 
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
 </h:head>
 
 <h:body>
@@ -28,16 +32,11 @@
 
 	<ui:insert name="menu">
 
-		<nav class="navbar navbar-expand-lg bg-dark">
+		<nav class="navbar navbar-expand-lg bg-primary">
 			<div class="container-fluid">
-				<a style="text-decoration: none; color: white" class="navbar-brand"
-					href="#">LJ-E commerce</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+				<a style="text-decoration: none; color: white;position:absolute;right:45%;font-family: 'Fascinate', cursive;" class="navbar-brand"
+					href="#">Lucas José</a>
+				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"><a
@@ -61,8 +60,7 @@
 									class="dropdown-item" href="cadastro-marcas.xhtml">Cadastro
 										de Marcas</a></li>
 								<li><a style="text-decoration: none; color: black"
-									class="dropdown-item" href="carrinho.xhtml">Carrinho
-										</a></li>
+									class="dropdown-item" href="carrinho.xhtml">Carrinho </a></li>
 								<li><a style="text-decoration: none; color: black"
 									class="dropdown-item" href="historico.xhtml">Histórico de
 										vendas</a></li>
@@ -71,27 +69,53 @@
 
 				</div>
 			</div>
+			
+	<div>
+	<div style="display:inline-flex;margin-right:30px;" class="logo">
+		<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg>	
+	</div>
+		<div style="width: 100%; text-align: right;">
+		
+	
+		<div>
+		
+			<h:form rendered="#{homeController.usuarioLogado != null}">
+			<div>
+				<h:outputLabel value="Olá,#{homeController.usuarioLogado.nome}" />
+			
+			</div>
+				<div>
+				<h:commandButton styleClass ="usuarioLogado" value=" Sair"
+					action="#{homeController.encerrarSessao}" style="color:black" />
+					<i class="fa fa-sign-out"></i>
+				
+				</div>
+			</h:form>
+		</div>
+</div>
+	</div>
+	
 		</nav>
 
 	</ui:insert>
-	<div>
-		<div style="width: 100%; text-align: right;">
-			<h:form rendered="#{homeController.usuarioLogado != null}">
-				<h:outputLabel value="Olá #{homeController.usuarioLogado.nome}" />
-				<h:commandButton value=" (Sair)"
-					action="#{homeController.encerrarSessao}" style="color:black" />
-			</h:form>
-		</div>
-	</div>
+
+<div style="padding: 30px;
+    background-color: orange;">
+
+
+</div>
 
 	<h:form id="form">
+	
 		<div class="barraPesquisa">
 			<div class="pesquisa">
 
-					
 				<div class="input">
 
-					<h:inputText class="form-control me-2"
+					<h:inputText styleClass="form-control me-2"
 						value="#{vendaController.filtro}" pt:placeholder="Pesquisar" />
 				</div>
 
@@ -103,14 +127,24 @@
 
 					</h:commandButton>
 				</div>
-			</div>
 
-			<div style="width: 100%; text-align: right;">
-				<h:form rendered="#{homeController.usuarioLogado != null}">
-					<h:outputLabel value="Olá #{homeController.usuarioLogado.nome}" />
-					<h:commandButton value=" (Sair)"
-						action="#{homeController.encerrarSessao}" style="color:black" />
-				</h:form>
+
+				<div style="position:absolute;right:7%" class="icons">
+				
+	
+					<h:commandButton styleClass="carrinho" value="🛒"
+						actionListener="#{vendaController.irPraCarrinho}">
+						
+					</h:commandButton>
+					
+					
+				<h:inputText id="carrinho" 
+				value="#{vendaController.num}">
+				
+				</h:inputText>
+
+				</div>
+				
 			</div>
 
 
@@ -127,10 +161,10 @@
 								<p class="card-text">Marca: #{obj.marca.nome}</p>
 								<p class="card-text">Câmbio: #{obj.cambio.label}</p>
 								<p class="card-text">Potência: #{obj.potencia}</p>
-								
-									<div class="price-container">
-										<p>R$ #{carroController.formatPrice(obj.preco)}</p>
-									</div>
+
+								<div class="price-container">
+									<p>R$ #{carroController.formatPrice(obj.preco)}</p>
+								</div>
 								<p class="card-text">
 									Lançamento:
 
@@ -143,9 +177,13 @@
 								</p>
 
 
-								<h:commandButton class="cart-container" value="Adicionar ao carrinho"
+								<h:commandButton class="cart-container"
+									value="Adicionar ao carrinho"
 									actionListener="#{vendaController.comprar(obj)}">
-									<f:ajax execute="@this" render="messages" />
+									
+									<f:ajax execute="@this" render="form"
+									listener="#{vendaController.quantidade}"/>
+		
 								</h:commandButton>
 							</div>
 
@@ -162,7 +200,7 @@
 
 
 
-	<div class="box footer" style="text-align: center;">
+	<div class="box footer" style="text-align: center;position:relative;bottom: 0px">
 		<h:outputText value="2022 - UNITINS - Todos os direitos reservados." />
 	</div>
 </h:body>

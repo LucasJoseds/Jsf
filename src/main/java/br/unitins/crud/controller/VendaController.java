@@ -23,8 +23,19 @@ public class VendaController implements Serializable {
 	private String filtro;
 	private List<Carro> listaCarros;
 
+	private int num;
 	
 	
+
+	public int getNum() {
+		
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public void pesquisar() {
 		CarroDAO dao = new CarroDAO();
 		setListaCarros(dao.findByNome(getFiltro()));
@@ -58,7 +69,27 @@ public class VendaController implements Serializable {
 		Util.addMessageInfo("Carro adicionado na sessão");
 		
 	}
+	
+	
+	public void irPraCarrinho() {
+		
+		Util.redirect("carrinho.xhtml");
+	}
 
+	  public void atualizarCarrinho(int numero) {
+	    	
+	    	 numero =numero+1;
+	    	
+	    }
+	  
+	    public void quantidade() {
+	    	
+	    	setNum(getNum()+1);
+	    
+	    
+	    }
+	
+	
 	public Integer getTipoFiltro() {
 		return tipoFiltro;
 	}
