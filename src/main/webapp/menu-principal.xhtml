@@ -110,17 +110,17 @@
 
 	<h:form id="form">
 	
-		<div class="barraPesquisa">
+		
 			<div class="pesquisa">
 
 				<div class="input">
 
-					<h:inputText styleClass="form-control me-2"
+					<h:inputText style="border-radius:20px;" styleClass="form-control me-2"
 						value="#{vendaController.filtro}" pt:placeholder="Pesquisar" />
 				</div>
 
 				<div class="botao">
-					<h:commandButton style="margin-left:2px"
+					<h:commandButton style="margin-left:2px; border-radius:20px;"
 						styleClass="btn btn-secondary" value="Pesquisar"
 						actionListener="#{vendaController.pesquisar}">
 						<f:ajax execute="form" render="form card" />
@@ -138,10 +138,10 @@
 					</h:commandButton>
 					
 					
-				<h:inputText id="carrinho" 
+				<h:commandButton styleClass="numeroCarrinho" 
 				value="#{vendaController.num}">
 				
-				</h:inputText>
+				</h:commandButton>
 
 				</div>
 				
@@ -159,24 +159,12 @@
 							<div class="card-body">
 								<h5 class="card-title">#{obj.nome}</h5>
 								<p class="card-text">Marca: #{obj.marca.nome}</p>
-								<p class="card-text">Câmbio: #{obj.cambio.label}</p>
-								<p class="card-text">Potência: #{obj.potencia}</p>
+							
 
 								<div class="price-container">
 									<p>R$ #{carroController.formatPrice(obj.preco)}</p>
 								</div>
-								<p class="card-text">
-									Lançamento:
-
-
-									<h:outputLabel styleClass="card-text"
-										value="#{obj.datalancamento}">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									</h:outputLabel>
-
-								</p>
-
-
+				
 								<h:commandButton class="cart-container"
 									value="Adicionar ao carrinho"
 									actionListener="#{vendaController.comprar(obj)}">
@@ -185,6 +173,7 @@
 									listener="#{vendaController.quantidade}"/>
 		
 								</h:commandButton>
+								
 							</div>
 
 						</div>
@@ -194,7 +183,7 @@
 				</h:form>
 
 			</ui:insert>
-		</div>
+		
 	</h:form>
 
 
